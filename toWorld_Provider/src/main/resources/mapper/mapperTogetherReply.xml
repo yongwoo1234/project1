@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sboot.toworld.dao.TogetherReplyDAO">
+
+
+
+<!-- 댓글 목록 보기 -->
+	<select id="readReply" resultType="com.sboot.toworld.vo.TogetherReplyVO">
+	    	SELECT
+	    		  RNO, CONTENT, ID, REGDATE
+	    	 FROM toge_reply
+	    	WHERE serial = #{serial}
+	    	order by regdate
+	</select>
+
+<!-- 댓글 작성 -->
+	<insert id="insertReply">
+		INSERT INTO toge_reply (serial, RNO, CONTENT, id)
+		VALUES(#{serial}, toge_reply_SEQ.NEXTVAL, #{content, jdbcType=VARCHAR}, #{id})
+	</insert>
+
+<!-- 댓글 수정 -->
+	<update id="updateReply">
+		UPDATE toge_reply SET CONTENT = #{content}
+		WHERE RNO = #{rno} and id=#{id}
+	</update>
+
+<!-- 댓글 삭제 -->
+	<delete id="deleteReply">
+		DELETE FROM toge_reply
+		WHERE RNO = #{rno} and id=#{id}
+	</delete>
+	
+<!-- 아이디 체크 -->
+	<select id="replyUserIdCheck" resultType="String">
+		select id from toge_reply where RNO = #{rno}
+	</select>
+	
+<!-- 선택된 댓글 조회 -->
+	<select id="selectReply" resultType="com.sboot.toworld.vo.TogetherReplyVO">
+		SELECT serial, RNO, CONTENT, id, REGDATE
+		FROM toge_reply
+		WHERE RNO = #{rno}
+	</select>
+
+
+</mapper>

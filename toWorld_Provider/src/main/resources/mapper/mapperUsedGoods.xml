@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sboot.toworld.dao.UsedGoodsDAO">
+
+
+<!-- 게시글 목록 -->
+<select id="getUsedGoods" resultType="com.sboot.toworld.vo.UsedGoodsVO">
+	select * from goods order by ddate
+</select>
+
+<!-- 게시글 추가 -->
+<insert id="insertUsedGoods">
+    INSERT INTO goods values(goods_seq.nextval, #{title, jdbcType=VARCHAR}, #{id}, #{goodsName, jdbcType=VARCHAR}, sysdate, #{fileName, jdbcType=VARCHAR}, #{fileUrl, jdbcType=VARCHAR}, 0, #{price}, #{context, jdbcType=VARCHAR}, 1)
+</insert>
+
+<!-- 상세 게시글 조회 -->
+<select id="detailUsedGoods" resultType="com.sboot.toworld.vo.UsedGoodsVO">
+	SELECT * FROM goods where serial = #{serial}
+</select>
+
+<!-- 게시글 업데이트 -->
+<update id="updateUsedGoods">
+	UPDATE goods SET title = #{title, jdbcType=VARCHAR}, price=#{price}, context = #{context, jdbcType=VARCHAR} WHERE serial = #{serial}
+</update>
+
+<!-- 게시글 삭제 -->
+<delete id="deleteUsedGoods">
+	DELETE FROM goods WHERE serial = #{serial} 
+</delete>
+
+
+
+<!-- 상품 품절 -->
+<update id="soldOut" parameterType="int">
+	Update goods SET many = many-1 WHERE serial = #{serial}
+</update>
+
+
+<!-- 조회수 -->
+<update id="plusCnt" parameterType="int">
+  UPDATE goods SET viewcnt = viewcnt + 1 WHERE serial = #{serial}
+</update>
+
+    
+
+
+
+<!-- 페이징 -->
+<!-- 게시물 10개 출력하는 쿼리 -->
+<select id="listPage" resultType="com.sboot.toworld.vo.UsedGoodsVO" parameterType="com.sboot.toworld.vo.SearchCriteria">
+		SELECT  serial, title, context, id, ddate, viewcnt, price
+		FROM ( 
+		        SELECT serial, 
+		               TITLE, 
+		               context, 
+		               id, 
+		               ddate, 
+		               viewcnt,
+		               price,
+		               ROW_NUMBER() OVER(ORDER BY ddate) AS RNUM
+		         FROM goods
+		         where 1=1
+		         <include refid="search"></include>
+		                       ) MP
+		WHERE RNUM BETWEEN #{rowStart} AND #{rowEnd}
+		ORDER BY ddate
+	</select>
+	
+	
+
+<!-- 게시물 총개수  -->
+<select id="count" resultType="int" parameterType="com.sboot.toworld.vo.SearchCriteria">
+		SELECT COUNT(serial)
+		  FROM goods
+		  where 1=1 
+		  <include refid="search"></include>
+		  
+</select>
+
+<!-- 검색 기능 -->
+<sql id="search">
+		<if test="searchType != null">
+			<if test="searchType == 't'.toString()">AND TITLE LIKE '%' || #{keyword} || '%'</if>
+			<if test="searchType == 'c'.toString()">AND context LIKE '%' || #{keyword} || '%'</if>
+			<if test="searchType == 'w'.toString()">AND id LIKE '%' || #{keyword} || '%'</if>
+			<if test="searchType == 'tc'.toString()">AND (TITLE LIKE '%' || #{keyword} || '%') or (context LIKE '%' || #{keyword} || '%')</if>
+		</if>
+	</sql>   
+   
+   
+   
+</mapper>

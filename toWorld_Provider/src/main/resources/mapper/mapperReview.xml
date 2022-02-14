@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sboot.toworld.dao.ReviewDAO">
+
+	
+  <!-- 리뷰 작성 -->
+   <insert id="insertReview">
+        insert into reviewcountry values (reviewcountry_seq.nextval, #{country}, #{id}, #{title}, #{contents}, sysdate, #{fileName}, #{fileUrl}, #{viewcnt})
+   </insert>
+  
+  <!-- 리뷰 조회 --> 
+   <select id="getReview" resultType="com.sboot.toworld.vo.ReviewVO">
+        select * from reviewcountry where #{country} = country
+   </select>
+   
+  <!-- 리뷰 조회 --> 
+   <select id="getReview2" resultType="com.sboot.toworld.vo.ReviewVO">
+        select * from reviewcountry where #{fileName} = fileName
+   </select>
+   
+  <!-- 해당 게시글 번호에 해당하는 게시글 조회 -->
+   <select id="viewReview" resultType="com.sboot.toworld.vo.ReviewVO">
+        select * from reviewcountry where #{serial} = serial
+   </select>
+   
+ 
+   <select id="getReviewDetail" resultType="com.sboot.toworld.vo.ReviewVO">
+        select * from reviewcountry where #{fileName} = fileName
+   </select>
+   
+  <!-- 리뷰 업데이트 -->
+   <update id="updateReview">
+   		UPDATE reviewcountry SET title = #{title}, contents = #{contents} WHERE fileName = #{fileName}
+   </update>
+   
+  <!-- 리뷰 삭제 -->
+   <delete id="deleteReview">
+   		DELETE FROM reviewcountry WHERE #{fileName} = fileName
+   </delete>
+  
+  <!-- 게시글 조회수 증가 --> 
+   <update id="plusCount">
+   		UPDATE reviewcountry SET viewcnt = viewcnt + 1 WHERE #{fileName} = fileName
+   </update>
+   
+   
+	
+</mapper>

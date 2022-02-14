@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sboot.toworld.dao.ReviewReplyDAO">
+
+<!-- 댓글 작성 -->
+<insert id="insertComment">
+	insert into rvw_reply values (#{serial} , rvw_reply_seq.nextval, #{id}, #{rvwcomment}, sysdate, #{fileName})
+</insert>
+
+<!-- 댓글 삭제 -->
+<delete id="deleteComment">
+	delete from rvw_reply where #{rp_no} = rp_no
+</delete>
+
+<!-- 댓글 하나 선택 -->
+<select id="getComment" resultType="com.sboot.toworld.vo.ReviewReplyVO">
+	select * from rvw_reply where #{serial} = serial
+</select>
+
+<!-- 댓글 수정 -->
+<update id="updateComment">
+   		UPDATE rvw_reply SET rvwcomment = #{rvwcomment } WHERE rp_no = #{rp_no}
+   </update>
+ 
+<!-- 작성자 여부 확인 -->   
+<select id="replyUserIdCheck" resultType="String">
+	select rvwid from rvw_reply where rp_no = #{rp_no}
+</select>
+
+</mapper>

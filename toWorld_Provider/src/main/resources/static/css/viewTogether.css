@@ -1,0 +1,112 @@
+@charset "UTF-8";
+
+	*{
+	font-family: 'Noto Sans KR', sans-serif;
+	}
+
+   .header{
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+    z-index:10;
+    display:flax;
+    background:white;
+    height:60px;
+    justify-content:space-between;
+    align-items:center;    
+    }
+
+
+   .test{  
+   margin: 0 auto;
+   width:75%;   
+   }
+   
+   body{
+      padding-top: 75px;
+      
+   }
+   
+   .context{
+   word-break:break-all; 
+   }
+   .button{
+   text-align:right;
+   
+   }
+   
+   
+   #content{
+      margin-left:2%;
+      margin-top:1%;
+      width:85%;
+      height:50px;
+   }
+   
+   
+   .footer{
+
+   bottom:0;
+   
+   }
+ 
+   form {
+   
+   display:inline;
+  
+}
+
+.input_area{
+	background-color:#FFF0CB;
+	padding-top:10px;
+	padding-left:15px;
+}
+
+
+#repCon {
+	margin-top:10px;
+	margin-bottom:-20px;
+    width: 87%;
+    height: 6em;
+	border-radius: 5px;
+    resize: none;
+  }
+  
+#reply_btn{
+	position:relative;
+	top:-24px;
+    width: 6em;
+  	height: 6em;
+  	border-radius: 5px;
+ }
+ 
+ #reply_all{
+ 	margin-left:-4%;
+ }
+ 
+
+ 	
+ 
+
+
+ div.replyModal { position:relative; z-index:1; display:none;}
+ div.modalBackground { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0, 0, 0, 0.8); z-index:-1; }
+ div.modalContent { position:fixed; top:20%; left:calc(50% - 250px); width:500px; height:250px; padding:20px 10px; background:#fff; border:2px solid #666; }
+ div.modalContent textarea { font-size:16px; font-family:'맑은 고딕', verdana; width:99%; height:200px; }
+ div.modalContent button { font-size:20px; padding:5px 10px; margin:10px 0; border:1px solid #ccc; }
+  div.modalContent button:hover { font-size:20px; padding:5px 10px; margin:10px 0; background:lightgray; border:1px solid #ccc; }
+/*  div.modalContent button.modal_cancel { margin-left:10px; } */
+ 
+#replyFooter { float:right; font-size:14px; border: 1px solid #999; background:white; margin-right:5px;}
+#replyFooter:hover { float:right; font-size:14px; border: 1px solid #999; background:lightgray; margin-right:5px;}
+
+
+
+.test img {
+         margin-bottom: 20px;
+         max-width: 50%;
+         height: auto;
+         display: block;
+      }
+
